@@ -1,18 +1,19 @@
 /*
  * Copyright © 2017-2019 Cask Data, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and limitations under the License.
  */
+
+
 
 grammar Directives;
 
@@ -21,21 +22,10 @@ options {
 }
 
 @lexer::header {
-/*
- * Copyright © 2017-2019 Cask Data, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
+  /*
+   * Copyright © 2017-2019 Cask Data, Inc.
+   * Licensed under the Apache License, Version 2.0
+   */
 }
 
 /**
@@ -65,27 +55,27 @@ directive
     | numberRanges
     | properties
   )*?
-  ;
+ ;
 
 ifStatement
   : ifStat elseIfStat* elseStat? '}'
-  ;
+ ;
 
 ifStat
   : 'if' expression '{' statements
-  ;
+ ;
 
 elseIfStat
   : '}' 'else' 'if' expression '{' statements
-  ;
+ ;
 
 elseStat
   : '}' 'else' '{' statements
-  ;
+ ;
 
 expression
   : '(' (~'(' | expression)* ')'
-  ;
+ ;
 
 forStatement
  : 'for' '(' Identifier '=' expression ';' expression ';' expression ')' '{'  statements '}'
@@ -140,7 +130,12 @@ numberRange
  ;
 
 value
- : String | Number | Column | Bool
+ : String
+ | Number
+ | Column
+ | Bool
+ | BYTE_SIZE
+ | TIME_DURATION
  ;
 
 ecommand
@@ -195,10 +190,14 @@ identifierList
  : Identifier (',' Identifier)*
  ;
 
+// ⬇️ Custom Byte and Time Tokens (moved up here)
+BYTE_SIZE: Digit+ ('.' Digit+)? BYTE_UNIT;
+TIME_DURATION: Digit+ ('.' Digit+)? TIME_UNIT;
 
-/*
- * Following are the Lexer Rules used for tokenizing the recipe.
- */
+fragment BYTE_UNIT: ('kb' | 'KB' | 'mb' | 'MB' | 'gb' | 'GB' | 'tb' | 'TB');
+fragment TIME_UNIT: ('ms' | 's' | 'sec' | 'seconds' | 'm' | 'min' | 'mins' | 'minutes' | 'h' | 'hr' | 'hrs' | 'hours' | 'd' | 'day' | 'days');
+
+// ⬇️ Lexer Rules
 OBrace   : '{';
 CBrace   : '}';
 SColon   : ';';
@@ -215,14 +214,22 @@ StartsWith : '=^';
 NotStartsWith : '!^';
 EndsWith : '=$';
 NotEndsWith : '!$';
-PlusEqual : '+=';
-SubEqual : '-=';
-MulEqual : '*=';
-DivEqual : '/=';
-PerEqual : '%=';
-AndEqual : '&=';
-OrEqual  : '|=';
-XOREqual : '^=';
+PlusEqual : '+='
+;
+SubEqual : '-='
+;
+MulEqual : '*='
+;
+DivEqual : '/='
+;
+PerEqual : '%='
+;
+AndEqual : '&='
+;
+OrEqual  : '|='
+;
+XOREqual : '^='
+;
 Pow      : '^';
 External : '!';
 GT       : '>';
@@ -237,16 +244,15 @@ CBracket : ']';
 OParen   : '(';
 CParen   : ')';
 Assign   : '=';
-Comma    : ',';
+Comma    : ',';         // Important: needed for lists
 QMark    : '?';
-Colon    : ':';
+Colon    : ':';         // Important: used in expressions
 Dot      : '.';
 At       : '@';
 Pipe     : '|';
 BackSlash: '\\';
 Dollar   : '$';
 Tilde    : '~';
-
 
 Bool
  : 'true'
@@ -270,30 +276,31 @@ Column
  ;
 
 String
- : '\'' ( EscapeSequence | ~('\'') )* '\''
- | '"'  ( EscapeSequence | ~('"') )* '"'
+ : '\'' ( EscapeSequence | ~('\'' ) )* '\''
+ | '"'  ( EscapeSequence | ~('"' ) )* '"'
  ;
 
 EscapeSequence
-   :   '\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')
-   |   UnicodeEscape
-   |   OctalEscape
-   ;
+ : '\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')
+ | UnicodeEscape
+ | OctalEscape
+ ;
 
 fragment
 OctalEscape
-   :   '\\' ('0'..'3') ('0'..'7') ('0'..'7')
-   |   '\\' ('0'..'7') ('0'..'7')
-   |   '\\' ('0'..'7')
-   ;
+ : '\\' ('0'..'3') ('0'..'7') ('0'..'7')
+ | '\\' ('0'..'7') ('0'..'7')
+ | '\\' ('0'..'7')
+ ;
 
 fragment
 UnicodeEscape
-   :   '\\' 'u' HexDigit HexDigit HexDigit HexDigit
-   ;
+ : '\\' 'u' HexDigit HexDigit HexDigit HexDigit
+ ;
 
 fragment
-   HexDigit : ('0'..'9'|'a'..'f'|'A'..'F') ;
+HexDigit : ('0'..'9'|'a'..'f'|'A'..'F')
+ ;
 
 Comment
  : ('//' ~[\r\n]* | '/*' .*? '*/' | '--' ~[\r\n]* ) -> skip

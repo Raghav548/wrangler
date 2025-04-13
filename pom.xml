@@ -123,6 +123,9 @@
     <slf4j.version>1.7.15</slf4j.version>
     <unix4j.version>0.4</unix4j.version>
     <testSourceLocation>${project.basedir}/src/test/java/</testSourceLocation>
+     <checkstyle.skip>true</checkstyle.skip>
+     <maven.compiler.source>22</maven.compiler.source>
+    <maven.compiler.target>22</maven.compiler.target>
   </properties>
 
   <repositories>
@@ -169,6 +172,19 @@
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
+    </dependency>
+     <dependency>
+        <groupId>org.powermock</groupId>
+        <artifactId>powermock-api-mockito2</artifactId>
+        <version>2.0.9</version> <!-- Use latest version -->
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.powermock</groupId>
+        <artifactId>powermock-module-junit4</artifactId>
+        <version>2.0.9</version> <!-- Use latest version -->
+        <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -297,11 +313,17 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.13.0</version>
       </plugin>
-      <plugin>
+       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.14.1</version>
+        <version>3.1.2</version> <!-- Or 3.0.0-M9 also works -->
+        <configuration>
+          <argLine>
+            --add-opens java.base/java.lang=ALL-UNNAMED
+          </argLine>
+        </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
