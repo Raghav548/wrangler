@@ -1,0 +1,88 @@
+# prompts.txt - AI-assisted Development Log for Wrangler Intern Assignment
+# This file logs the key prompts and AI assistance used throughout the development of the ByteSize and TimeDuration feature integration.
+
+---
+
+Prompt 1:
+"Why do I do `mvn clean install -DskipTests` as I have done `mvn clean install` already?"
+
+Prompt 2:
+"Explain more clearly what to do after step 2."
+
+Prompt 3:
+"I’m getting ANTLR4 build errors. Help me fix it."
+
+Prompt 4:
+"Give me full `Directives.g4` file with changes."
+
+Prompt 5:
+"How to proceed to step 6 in the setup?"
+
+Prompt 6:
+"How do I place test files in the correct test directory?"
+
+Prompt 7:
+"I got this Maven error: `Missing argument in parameter list` when running tests."
+
+Prompt 8:
+"Maven build failed due to unapproved license. How do I fix this?"
+
+Prompt 9:
+"Where do I place the new directive file? There is no `plugin` folder."
+
+Prompt 10:
+"Fixed errors in `AggregateStatsTest.java`, now getting constructor mismatch. What to do?"
+
+Prompt 11:
+"ByteSize.java and TimeDuration.java show error: 'no interface expected here' — fix it."
+
+Prompt 12:
+"Cannot find symbol variable LONG in TokenType — help fix."
+
+Prompt 13:
+"Checkstyle plugin shows 5 errors. Help me locate and fix them."
+
+Prompt 14:
+"How do I make sure ByteSize and TimeDuration are used properly in grammar?"
+
+Prompt 15:
+"Tests fail due to 'No tests executed' — should I add test class in parser directory?"
+
+Prompt 16:
+"Tests now throw `DirectiveNotFoundException` for `aggregate-stats`. How do I register it?"
+
+Prompt 17:
+"Where should `META-INF/services/io.cdap.wrangler.api.Directive` go for directive registration?"
+
+Prompt 18:
+"Running `mvn test` throws expected vs actual value mismatch. Help fix assertions."
+
+Prompt 19:
+"Where is `toJson()`, `value()`, and `type()` implemented? How do they return the correct data?"
+
+Prompt 20:
+"Generate a clean and professional README file including commands and documentation."
+
+Prompt 21:
+"Explain why we added the ByteSize and TimeDuration feature in the first place."
+
+Prompt 22:
+"Describe what changes were made to the grammar and parsing logic."
+
+Prompt 23:
+"Does my directory structure look correct? Please verify."
+
+Prompt 24:
+"How do I push my changes back to GitHub after everything is working?"
+
+Prompt 25:
+"What is `prompts.txt`, and how do I create it for this assignment?"
+
+Prompt 26:
+"Generate full `prompts.txt` content for GitHub submission."
+
+---
+
+# Notes:
+- This log reflects actual prompts and requests given to ChatGPT during development.
+- Some responses were reused across iterations, especially for build fixes and test assertions.
