@@ -44,7 +44,12 @@ To run specific tests:
 ```bash
  mvn -pl wrangler-core test -Dtest=TimeDurationTest
 ```
+# Evidence / Screenshots of tests working
 
+### 🧪 All Tests Passed
+![Tests Passed](docs/images/Screenshot 2025-04-13 220252.png)
+![Tests Passed](docs/images/Screenshot 2025-04-13 220225.png)
+![Tests Passed](docs/images/Screenshot 2025-04-13 220202.png)
 ---
 
 ## 📌 Directive Name
